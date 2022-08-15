@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://xiaozhi1002.github.io</id>
     <title>Mr.deaf</title>
-    <updated>2022-08-14T15:43:35.551Z</updated>
+    <updated>2022-08-15T15:09:59.006Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://xiaozhi1002.github.io"/>
     <link rel="self" href="https://xiaozhi1002.github.io/atom.xml"/>
@@ -11,22 +11,34 @@
     <icon>https://xiaozhi1002.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, Mr.deaf</rights>
     <entry>
-        <title type="html"><![CDATA[再测试一次]]></title>
-        <id>https://xiaozhi1002.github.io/post/zai-ce-shi-yi-ci/</id>
-        <link href="https://xiaozhi1002.github.io/post/zai-ce-shi-yi-ci/">
-        </link>
-        <updated>2022-08-14T07:59:06.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="我就不信了">我就不信了</h3>
-<figure data-type="image" tabindex="1"><img src="https://xiaozhi1002.github.io/post-images/1660468865507.png" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[测试博客推送]]></title>
+        <title type="html"><![CDATA[HashMap中优雅的方法]]></title>
         <id>https://xiaozhi1002.github.io/post/ce-shi-bo-ke-tui-song/</id>
         <link href="https://xiaozhi1002.github.io/post/ce-shi-bo-ke-tui-song/">
         </link>
         <updated>2022-08-14T07:19:46.000Z</updated>
-        <content type="html"><![CDATA[<h3 id="前天摔车了好疼">前天摔车了，好疼</h3>
+        <content type="html"><![CDATA[<h1 id="tablesizeforint-cap">tableSizeFor(int cap)</h1>
+<p>tableSizeFor()是HashMap设置元素数量的方法，作用是返回大于等于入参的最小的2的幂。如果是高中数学来做这道题，看上去还是简单的，可以利用对cap求以2为底的对数。JDK提供了Math.log(double a)方法，可以对自然数e求底数，利用换底公式:logx(y) =loge(y) / loge(x)，我们可以用Math.log(cap)/Math.log(2)的方式来求幂次。</p>
+<pre><code>public static int Logarithm (int cap){
+    double m = Math.log(cap)/Math.log(2);
+    return (int) Math.pow(2,(int)Math.ceil(m) );
+}
+</code></pre>
+<p>这段代码看着简单，但是执行起来最终运行的指令数一定不算少，如果是执行效率要求高的地方使用这种方式肯定不合适。本来HashMap要转换为2的幂是为了减少哈希冲突，提高存取效率，这个方法反而严重地影响了效率，那么作者是怎么设计算法的呢？</p>
+<pre><code>    /**
+     * Returns a power of two size for the given target capacity.
+     */
+    static final int tableSizeFor(int cap) {
+        int n = cap - 1;
+        n |= n &gt;&gt;&gt; 1;
+        n |= n &gt;&gt;&gt; 2;
+        n |= n &gt;&gt;&gt; 4;
+        n |= n &gt;&gt;&gt; 8;
+        n |= n &gt;&gt;&gt; 16;
+        return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+    }
+</code></pre>
+<p>首先设计的思路是，2的幂主要特点是各位上只有一个是1，其他的都是0，比如16用32位的二进制表示为 0000 0000 0000 0000 0000 0000 0001 0000，那么我们只要能够想办法获取到<br>
+0000 0000 0000 0000 0000 0000 0000 1111，再加一就能得到16了。</p>
 ]]></content>
     </entry>
 </feed>
