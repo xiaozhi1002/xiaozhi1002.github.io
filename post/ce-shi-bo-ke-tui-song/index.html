@@ -78,7 +78,7 @@
         
         <li class="nav-item">
           <div class="gridea-search-container">
-            <form id="gridea-search-form" style="position: relative" data-update="1660739224118"
+            <form id="gridea-search-form" style="position: relative" data-update="1660749065629"
               action="/search/index.html">
               <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
               <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
@@ -128,7 +128,7 @@
         
         <li class="nav-item">
           <div class="gridea-search-container">
-            <form id="gridea-search-form" style="position: relative" data-update="1660739224118"
+            <form id="gridea-search-form" style="position: relative" data-update="1660749065629"
               action="/search/index.html">
               <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
               <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
@@ -193,10 +193,10 @@
         return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
     }
 </code></pre>
-<p>首先设计的思路是，2的幂主要特点是各位上只有一个是1，其他的都是0，比如16用32位的二进制表示为 0000 0000 0000 0000 0000 0000 0001 0000，那么我们只要能够想办法获取到<br>
+<p>首先设计的思路是，2的幂主要特点是各位上只有一个是1，其他的都是0，比如16用32位的二进制表示为 0000 0000 0000 0000 0000 0000 0001 0000，那么，我们只要能够想办法将原值通过计算变形成为<br>
 0000 0000 0000 0000 0000 0000 0000 1111，再加一就能得到16了。如果一个数的二进制表示是<br>
 0000 0000 0000 0001 1010 0101 1000 0101，只要通过运算得到最高有效位之后全是1即可，例如<br>
-0000 0000 0000 0001 1111 1111 1111 1111。那么代码上是怎么运算的呢？</p>
+0000 0000 0000 0001 1111 1111 1111 1111。</p>
 <p>0000 0000 0000 0001 1010 0101 1000 0101    原值<br>
 0000 0000 0000 0000 1101 0010 1100 0010    右移1位<br>
 0000 0000 0000 0001 1111 0111 1100 0111    按位或得到结果</p>
@@ -214,14 +214,13 @@
 0000 0000 0000 0001 1111 1111 1111 1111     最终结果 加1后得到<br>
 0000 0000 0000 0010 0000 0000 0000 0000</p>
 <p>这样看着可能不太直观，因为右移4位的时候就已经得到结果了。实际上当cap较小时，后面几步确实多了几次无意义的操作。</p>
-<p>01xx xxxx xxxx xxxx xxxx xxxx xxxx xxxx         原值<br>
-011x xxxx xxxx xxxx xxxx xxxx xxxx xxxx         右移1位操作后得到<br>
-0111 1xxx xxxx xxxx xxxx xxxx xxxx xxxx         右移2位操作后得到<br>
-0111 1111 1xxx xxxx xxxx xxxx xxxx xxxx        右移4位操作后得到<br>
+<p>01xx xxxx xxxx xxxx xxxx xxxx xxxx xxxx             原值<br>
+011x xxxx xxxx xxxx xxxx xxxx xxxx xxxx             右移1位操作后得到<br>
+0111 1xxx xxxx xxxx xxxx xxxx xxxx xxxx             右移2位操作后得到<br>
+0111 1111 1xxx xxxx xxxx xxxx xxxx xxxx     右移4位操作后得到<br>
 0111 1111 1111 1111 1xxx xxxx xxxx xxxx      右移8位操作后得到<br>
 0111 1111 1111 1111 1111 1111 1111 1111  右移16位操作后得到</p>
-<p>至于为何一开始cap-1，是因为如果cap本身就是2的幂，比如4，不减1的话最终运算结果会是8，与期望不符。<br>
-由于都是位运算，这段代码执行的效率是相当高的。</p>
+<p>至于为何一开始cap-1，是因为如果cap本身就是2的幂，比如4，不减1的话最终运算结果会是8，与期望不符。由于都是位运算，这段代码执行的效率是比对数求底方法高很多的。</p>
 
           <div class="toc-container"><ul class="markdownIt-TOC">
 <li><a href="#%E5%AE%B9%E9%87%8F%E8%AE%A1%E7%AE%97tablesizeforint-cap">容量计算：tableSizeFor(int cap)</a></li>
