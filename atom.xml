@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://xiaozhi1002.github.io</id>
     <title>Mr.deaf</title>
-    <updated>2022-08-15T23:06:34.243Z</updated>
+    <updated>2022-08-17T12:26:26.875Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://xiaozhi1002.github.io"/>
     <link rel="self" href="https://xiaozhi1002.github.io/atom.xml"/>
@@ -16,7 +16,7 @@
         <link href="https://xiaozhi1002.github.io/post/ce-shi-bo-ke-tui-song/">
         </link>
         <updated>2022-08-14T07:19:46.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="tablesizeforint-cap">tableSizeFor(int cap)</h1>
+        <content type="html"><![CDATA[<h1 id="容量计算tablesizeforint-cap">容量计算：tableSizeFor(int cap)</h1>
 <p>tableSizeFor()是HashMap设置元素数量的方法，作用是返回大于等于入参的最小的2的幂。如果是高中数学来做这道题，看上去还是简单的，可以利用对cap求以2为底的对数。JDK提供了Math.log(double a)方法，可以对自然数e求底数，利用换底公式:logx(y) =loge(y) / loge(x)，我们可以用Math.log(cap)/Math.log(2)的方式来求幂次。</p>
 <pre><code>public static int Logarithm (int cap){
     double m = Math.log(cap)/Math.log(2);
@@ -38,7 +38,34 @@
     }
 </code></pre>
 <p>首先设计的思路是，2的幂主要特点是各位上只有一个是1，其他的都是0，比如16用32位的二进制表示为 0000 0000 0000 0000 0000 0000 0001 0000，那么我们只要能够想办法获取到<br>
-0000 0000 0000 0000 0000 0000 0000 1111，再加一就能得到16了。</p>
+0000 0000 0000 0000 0000 0000 0000 1111，再加一就能得到16了。如果一个数的二进制表示是<br>
+0000 0000 0000 0001 1010 0101 1000 0101，只要通过运算得到最高有效位之后全是1即可，例如<br>
+0000 0000 0000 0001 1111 1111 1111 1111。那么代码上是怎么运算的呢？</p>
+<p>0000 0000 0000 0001 1010 0101 1000 0101    原值<br>
+0000 0000 0000 0000 1101 0010 1100 0010    右移1位<br>
+0000 0000 0000 0001 1111 0111 1100 0111    按位或得到结果</p>
+<p>0000 0000 0000 0001 1111 0111 1100 0111<br>
+0000 0000 0000 0000 0111 1101 1111 0001    右移2位<br>
+0000 0000 0000 0001 1111 1111 1111 0111</p>
+<p>0000 0000 0000 0001 1111 1111 1111 0111<br>
+0000 0000 0000 0000 0001 1111 1111 1111     右移4位<br>
+0000 0000 0000 0001 1111 1111 1111 1111</p>
+<p>0000 0000 0000 0001 1111 1111 1111 1111<br>
+0000 0000 0000 0000 0000 0001 1111 1111     右移8位<br>
+0000 0000 0000 0001 1111 1111 1111 1111</p>
+<p>0000 0000 0000 0001 1111 1111 1111 1111<br>
+0000 0000 0000 0000 0000 0000 0000 0001     右移16位<br>
+0000 0000 0000 0001 1111 1111 1111 1111     最终结果 加1后得到<br>
+0000 0000 0000 0010 0000 0000 0000 0000</p>
+<p>这样看着可能不太直观，因为右移4位的时候就已经得到结果了。实际上当cap较小时，后面几步确实多了几次无意义的操作。</p>
+<p>01xx xxxx xxxx xxxx xxxx xxxx xxxx xxxx         原值<br>
+011x xxxx xxxx xxxx xxxx xxxx xxxx xxxx         右移1位操作后得到<br>
+0111 1xxx xxxx xxxx xxxx xxxx xxxx xxxx         右移2位操作后得到<br>
+0111 1111 1xxx xxxx xxxx xxxx xxxx xxxx        右移4位操作后得到<br>
+0111 1111 1111 1111 1xxx xxxx xxxx xxxx      右移8位操作后得到<br>
+0111 1111 1111 1111 1111 1111 1111 1111  右移16位操作后得到</p>
+<p>至于为何一开始cap-1，是因为如果cap本身就是2的幂，比如4，不减1的话最终运算结果会是8，与期望不符。<br>
+由于都是位运算，这段代码执行的效率是相当高的。</p>
 ]]></content>
     </entry>
 </feed>
