@@ -78,7 +78,7 @@
         
         <li class="nav-item">
           <div class="gridea-search-container">
-            <form id="gridea-search-form" style="position: relative" data-update="1660749065629"
+            <form id="gridea-search-form" style="position: relative" data-update="1660751265703"
               action="/search/index.html">
               <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
               <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
@@ -128,7 +128,7 @@
         
         <li class="nav-item">
           <div class="gridea-search-container">
-            <form id="gridea-search-form" style="position: relative" data-update="1660749065629"
+            <form id="gridea-search-form" style="position: relative" data-update="1660751265703"
               action="/search/index.html">
               <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
               <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
@@ -193,7 +193,7 @@
         return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
     }
 </code></pre>
-<p>首先设计的思路是，2的幂主要特点是各位上只有一个是1，其他的都是0，比如16用32位的二进制表示为 0000 0000 0000 0000 0000 0000 0001 0000，那么，我们只要能够想办法将原值通过计算变形成为<br>
+<p>首先设计的思路是，2的幂主要特点是各位上只有一个是1，其他的都是0，比如16用32位的二进制表示为 0000 0000 0000 0000 0000 0000 0001 0000，那么，我们只要能够想办法将原值通过计算变形成<br>
 0000 0000 0000 0000 0000 0000 0000 1111，再加一就能得到16了。如果一个数的二进制表示是<br>
 0000 0000 0000 0001 1010 0101 1000 0101，只要通过运算得到最高有效位之后全是1即可，例如<br>
 0000 0000 0000 0001 1111 1111 1111 1111。</p>

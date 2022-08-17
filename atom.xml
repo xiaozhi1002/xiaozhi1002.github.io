@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://xiaozhi1002.github.io</id>
     <title>Mr.deaf</title>
-    <updated>2022-08-17T15:12:17.830Z</updated>
+    <updated>2022-08-17T15:47:47.764Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://xiaozhi1002.github.io"/>
     <link rel="self" href="https://xiaozhi1002.github.io/atom.xml"/>
@@ -37,7 +37,7 @@
         return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
     }
 </code></pre>
-<p>首先设计的思路是，2的幂主要特点是各位上只有一个是1，其他的都是0，比如16用32位的二进制表示为 0000 0000 0000 0000 0000 0000 0001 0000，那么，我们只要能够想办法将原值通过计算变形成为<br>
+<p>首先设计的思路是，2的幂主要特点是各位上只有一个是1，其他的都是0，比如16用32位的二进制表示为 0000 0000 0000 0000 0000 0000 0001 0000，那么，我们只要能够想办法将原值通过计算变形成<br>
 0000 0000 0000 0000 0000 0000 0000 1111，再加一就能得到16了。如果一个数的二进制表示是<br>
 0000 0000 0000 0001 1010 0101 1000 0101，只要通过运算得到最高有效位之后全是1即可，例如<br>
 0000 0000 0000 0001 1111 1111 1111 1111。</p>
